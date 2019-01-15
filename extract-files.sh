@@ -18,16 +18,17 @@ DEVICE=shooter
 
 mkdir -p ../../../vendor/htc/$DEVICE/proprietary
 
+adb pull /system/bin/ip ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/bma150_usr ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/charging ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/htc_ebdlogd ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/htcbatt ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/load-modem.sh ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/logcat2 ../../../vendor/htc/$DEVICE/proprietary
-adb pull /system/bin/mpdecision ../../../vendor/htc/$DEVICE/proprietary
+#adb pull /system/bin/mpdecision ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/netmgrd ../../../vendor/htc/$DEVICE/proprietary
-adb pull /system/bin/record ../../../vendor/htc/$DEVICE/proprietary
-adb pull /system/bin/recordvideo ../../../vendor/htc/$DEVICE/proprietary
+#adb pull /system/bin/record ../../../vendor/htc/$DEVICE/proprietary
+#adb pull /system/bin/recordvideo ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/rmt_storage ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/qmuxd ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/thermald ../../../vendor/htc/$DEVICE/proprietary
@@ -76,7 +77,7 @@ adb pull /system/lib/libqdp.so ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/lib/libqmi.so ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/lib/libqmiservices.so ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/lib/libv8.so ../../../vendor/htc/$DEVICE/proprietary
-adb pull /system/lib/hw/camera.default.so ../../../vendor/htc/$DEVICE/proprietary
+adb pull /system/lib/hw/camera.msm8660.so ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/lib/hw/lights.msm8660.so ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/lib/hw/sensors.shooter.so ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/wimaxDumpKmsg ../../../vendor/htc/$DEVICE/proprietary
@@ -95,6 +96,11 @@ adb pull /system/bin/sound8x60 ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/bin/wimaxConfigInterface ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/etc/wimax/sequansd/DefaultTree.xml ../../../vendor/htc/$DEVICE/proprietary
 adb pull /system/etc/wimax/sequansd/sequansd_app.xml ../../../vendor/htc/$DEVICE/proprietary
+adb pull /system/lib/hw/audio_policy.default.so ../../../vendor/htc/$DEVICE/proprietary
+adb pull /system/lib/hw/audio_policy.msm8660.so ../../../vendor/htc/$DEVICE/proprietary
+adb pull /system/lib/libqdutils.so ../../../vendor/htc/$DEVICE/proprietary
+adb pull /system/lib/libsurfaceflinger.so ../../../vendor/htc/$DEVICE/proprietary
+adb pull /system/etc/permission/handheld_core_hardware.xml ../../../vendor/htc/$DEVICE/proprietary
 
 (cat << EOF) | sed s/__DEVICE__/$DEVICE/g > ../../../vendor/htc/$DEVICE/$DEVICE-vendor-blobs.mk
 # Copyright (C) 2010 The Android Open Source Project
@@ -115,7 +121,7 @@ adb pull /system/etc/wimax/sequansd/sequansd_app.xml ../../../vendor/htc/$DEVICE
 
 # Prebuilt libraries that are needed to build open-source libraries
 PRODUCT_COPY_FILES += \\
-    vendor/htc/__DEVICE__/proprietary/camera.default.so:obj/lib/hw/camera.default.so \\
+    vendor/htc/__DEVICE__/proprietary/camera.msm8660.so:obj/lib/hw/camera.msm8660.so \\
     vendor/htc/__DEVICE__/proprietary/libaudioalsa.so:obj/lib/libaudioalsa.so \\
     vendor/htc/__DEVICE__/proprietary/libacdbloader.so:obj/lib/libacdbloader.so \\
     vendor/htc/__DEVICE__/proprietary/libacdbmapper.so:obj/lib/libacdbmapper.so \\
@@ -123,16 +129,17 @@ PRODUCT_COPY_FILES += \\
     
 # All the blobs necessary for shooter
 PRODUCT_COPY_FILES += \\
+    vendor/htc/__DEVICE__/proprietary/ip:/system/bin/ip \\
     vendor/htc/__DEVICE__/proprietary/bma150_usr:/system/bin/bma150_usr \\
     vendor/htc/__DEVICE__/proprietary/charging:/system/bin/charging \\
     vendor/htc/__DEVICE__/proprietary/htc_ebdlogd:/system/bin/htc_ebdlogd \\
     vendor/htc/__DEVICE__/proprietary/htcbatt:/system/bin/htcbatt \\
     vendor/htc/__DEVICE__/proprietary/load-modem.sh:/system/bin/load-modem.sh \\
-    vendor/htc/__DEVICE__/proprietary/mpdecision:/system/bin/mpdecision \\
+#    vendor/htc/__DEVICE__/proprietary/mpdecision:/system/bin/mpdecision \\
     vendor/htc/__DEVICE__/proprietary/netmgrd:/system/bin/netmgrd \\
     vendor/htc/__DEVICE__/proprietary/qmuxd:/system/bin/qmuxd \\
-    vendor/htc/__DEVICE__/proprietary/record:/system/bin/record \\
-    vendor/htc/__DEVICE__/proprietary/recordvideo:/system/bin/recordvideo \\
+#    vendor/htc/__DEVICE__/proprietary/record:/system/bin/record \\
+#    vendor/htc/__DEVICE__/proprietary/recordvideo:/system/bin/recordvideo \\
     vendor/htc/__DEVICE__/proprietary/thermald:system/bin/thermald \\
     vendor/htc/__DEVICE__/proprietary/wireless_modem:system/bin/wireless_modem \\
     vendor/htc/__DEVICE__/proprietary/liba2dp.so:system/lib/liba2dp.so \\
@@ -179,7 +186,7 @@ PRODUCT_COPY_FILES += \\
     vendor/htc/__DEVICE__/proprietary/libqmiservices.so:/system/lib/libqmiservices.so \\
     vendor/htc/__DEVICE__/proprietary/libq3dtools_adreno200.so:/system/lib/egl/libq3dtools_adreno200.so \\
     vendor/htc/__DEVICE__/proprietary/libv8.so:system/lib/libv8.so \\
-    vendor/htc/__DEVICE__/proprietary/camera.default.so:/system/lib/hw/camera.default.so \\
+    vendor/htc/__DEVICE__/proprietary/camera.msm8660.so:/system/lib/hw/camera.msm8660.so \\
     vendor/htc/__DEVICE__/proprietary/lights.msm8660.so:/system/lib/hw/lights.msm8660.so \\
     vendor/htc/__DEVICE__/proprietary/sensors.shooter.so:/system/lib/hw/sensors.shooter.so \\
     vendor/htc/__DEVICE__/proprietary/logcat2:/system/bin/logcat2 \\
@@ -202,7 +209,11 @@ PRODUCT_COPY_FILES += \\
     vendor/htc/__DEVICE__/proprietary/sequansd_app.xml:/system/etc/wimax/sequansd/sequansd_app.xml \\
     vendor/htc/__DEVICE__/proprietary/wimaxDhcp.conf:/system/etc/wimax/dhcp/wimaxDhcp.conf \\
     vendor/htc/__DEVICE__/proprietary/ip:/system/bin/ip \\
-    vendor/htc/__DEVICE__/proprietary/wimax-api.jar:/system/framework/wimax-api.jar
+    vendor/htc/__DEVICE__/proprietary/wimax-api.jar:/system/framework/wimax-api.jar \\
+    vendor/htc/__DEVICE__/proprietary/audio_policy.default.so:/system/lib/hw/audio_policy.default.so \\
+    vendor/htc/__DEVICE__/proprietary/audio_policy.msm8660.so:/system/lib/hw/audio_policy.msm8660.so
+    vendor/htc/__DEVICE__/proprietary/libqdutils.so:/system/lib/libqdutils.so \\
+    vendor/htc/__DEVICE__/proprietary/libsurfaceflinger.so:/system/lib/libsurfaceflinger.so
 EOF
 
 ./setup-makefiles.sh
