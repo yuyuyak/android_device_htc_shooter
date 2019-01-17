@@ -1,12 +1,8 @@
-# mount point	fstype		device			[device2]
+#<src>			<mnt_point>	<type>	<mnt_flags>						<fs_mgr_flags>
+# load these in early-init instead
 
-/recovery	emmc		/dev/block/mmcblk0p22
-/boot		emmc		/dev/block/mmcblk0p21
-/cache          ext4            /dev/block/mmcblk0p25
-/data           ext4            /dev/block/mmcblk0p24
-/sd-ext         ext4            /dev/block/mmcblk1p2
-/sdcard		vfat		/dev/block/mmcblk1p1	/dev/block/mmcblk1
-/system         ext4            /dev/block/mmcblk0p23
-/wimax          emmc            /dev/block/mmcblk0p8
-/udata_wimax    emmc            /dev/block/mmcblk0p33
-/misc           emmc            /dev/block/mmcblk0p34
+/dev/block/mmcblk0p22   /boot       emmc    ro,noatime                                          wait
+/dev/block/mmcblk0p23	/system		ext4	ro,noatime,data=ordered,noauto_da_alloc			wait
+/dev/block/mmcblk0p24	/data		ext4	noatime,nosuid,nodev,data=ordered,noauto_da_alloc	wait,encryptable=footer
+/dev/block/mmcblk0p25	/cache		ext4	noatime,nosuid,nodev,data=ordered,noauto_da_alloc	wait
+/dev/block/mmcblk0p29	/devlog		ext4	noatime,nosuid,nodev,data=ordered,noauto_da_alloc	wait
